@@ -18,7 +18,7 @@ export default class Order {
     }
 
     get subTotal (): number {
-        return this.entries.reduce( (prev, entry) => entry.price + prev, 0 )
+        return this.entries.reduce( (prev, entry) => entry.getTotal() + prev, 0 )
     }
 
     get discountTotal (): number {

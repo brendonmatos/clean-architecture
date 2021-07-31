@@ -1,19 +1,18 @@
+import { Product } from "./Product";
 
 
-interface IOrderEntry { description: string; price: number; quantity: number}
+interface IOrderEntry { product: Product; quantity: number}
 
 export default class OrderEntry {
-    description: string;
-    price: number;
+    product: Product;
     quantity: number;
 
     constructor (entry: IOrderEntry) {
-        this.description = entry.description;
-        this.price = entry.price;
+        this.product = entry.product;
         this.quantity = entry.quantity;
     }
 
     getTotal () {
-        return this.price * this.quantity;
+        return this.product.price * this.quantity;
     }
 }

@@ -9,8 +9,7 @@ test("should be create order entry with 3 items and discount", async function() 
         },
         "items": [
             {
-                "description": "Test",
-                "price": 1000,
+                "product_id": "1",
                 "quantity": 1
             },
         ],
@@ -19,5 +18,5 @@ test("should be create order entry with 3 items and discount", async function() 
         ]
     })
 
-    expect(output.total).toBe(900)
+    expect(output.total).toBe(8100)
 })

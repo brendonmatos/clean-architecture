@@ -6,15 +6,17 @@ interface IDimensions {
 }
 
 export class Product {
+    
     name: string;
     weight: number;
     dimensions: IDimensions;
     price: number;
-    constructor(name: string, weight: number, dimensions: IDimensions, price: number) {
+
+    constructor(name: string, weight: number, dimensions: IDimensions, price?: number) {
         this.name = name;
         this.weight = weight;
         this.dimensions = dimensions;
-        this.price = price;
+        this.price = price || 0;
     }
 
     /* cm3 */
