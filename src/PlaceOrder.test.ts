@@ -1,7 +1,8 @@
 import PlaceOrder from "./PlaceOrder"
+import ProductsRepository from "./ProductsRepository"
 
 test("should be create order entry with 3 items and discount", async function() {
-    const placeOrder = new PlaceOrder()
+    const placeOrder = new PlaceOrder({products: new ProductsRepository()})
 
     const output = await placeOrder.execute({
         "client": {
