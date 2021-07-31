@@ -26,10 +26,15 @@ export default class CalculateShipping {
             totalDensity += product.density;
             totalVolume += product.volume;
         }
-        console.log(deliverDistance, totalVolume, totalDensity);
+
+        let cost = deliverDistance * (totalVolume / 1000) * totalDensity
+        if( cost < 1000 ) {
+            cost = 1000
+        }
+
         return {
             shipping: {
-                cost: deliverDistance * (totalVolume / 1000) * totalDensity,
+                cost
             }
         }
     }

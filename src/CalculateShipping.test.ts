@@ -33,3 +33,18 @@ test(`should calculate shipping price`, async () => {
     expect(output.shipping.cost).toEqual(3000)
     
 })
+
+test(`should calculate shipping price min`, async () => {
+    const calculateShipping = new CalculateShipping({products: new ProductsRepository(), geo: new GeoProvider()})
+
+    const output = await calculateShipping.execute({
+        order: {
+            entries: [
+                { product_id: "1", quantity: 1 },
+            ]
+        }
+    })
+
+    expect(output.shipping.cost).toEqual(1000)
+    
+})
