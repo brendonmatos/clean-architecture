@@ -1,9 +1,20 @@
 
-import { Client } from "./Client";
+import { Client, IClient } from "./Client";
 import Coupon from "./Coupon";
 import Order from "./Order"
 import OrderEntry from "./OrderEntry";
 import ProductsRepository from "./ProductsRepository";
+
+export interface IOrderEntry {
+    productId: string;
+    quantity: number;
+}
+
+export interface PlaceOrderDTO {
+    client: IClient;
+    entries: IOrderEntry[];
+    coupons: string[];
+}
 
 export default class PlaceOrder {
     coupons: Coupon[];
@@ -20,13 +31,14 @@ export default class PlaceOrder {
         this.orders = [];
     }
 
-    async execute (input: any) {
+    async execute (input: PlaceOrderDTO): Promise<{total: number}> {
+
         const client = new Client(input.client);
 
         const order = new Order(client);
         
-        for (const item of input.items) {
-            const product = await this.products.getById(item.product_id);
+        for (const item of input.entries) {
+            const product = await this.products.getById(item.productId);
             
             if (!product) {
                 throw new Error("Invalid product id");

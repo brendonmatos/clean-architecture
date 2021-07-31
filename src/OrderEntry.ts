@@ -1,7 +1,7 @@
 import { Product } from "./Product";
 
 
-interface IOrderEntry { product: Product; quantity: number}
+export interface IOrderEntry { product: Product; quantity: number}
 
 export default class OrderEntry {
     product: Product;

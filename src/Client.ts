@@ -1,6 +1,6 @@
 
 
-interface IClient {cpf: string}
+export interface IClient {cpf: string}
 
 export class Client implements IClient {
     cpf: string;
