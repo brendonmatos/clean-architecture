@@ -1,7 +1,6 @@
 import { Client, IClient } from "./Client"
 import Coupon from "./Coupon"
 import OrderEntry from "./OrderEntry"
-import { validateCPF } from "./validateCPF"
 
 export default class Order {
     
@@ -11,11 +10,7 @@ export default class Order {
     freight: number = 0
 
     constructor(client: IClient) {
-        if( !validateCPF(client.cpf) ) {
-            throw new Error("invalid cpf")
-        }
-
-        this.client = client
+        this.client = new Client(client)
     }
 
     get subTotal (): number {

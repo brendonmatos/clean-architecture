@@ -41,7 +41,7 @@ test("should be able to add coupon to the order", function() {
     order.addEntry(new OrderEntry({product: new Product("creme de barbear", 0, {x: 1, y:1, z:1}, 20_00), quantity:2}))
     order.addEntry(new OrderEntry({product: new Product("creme de barbear", 0, {x: 1, y:1, z:1}, 10_00), quantity:2}))
     order.addEntry(new OrderEntry({product: new Product("creme de barbear", 0, {x: 1, y:1, z:1}, 15_00), quantity:2}))
-    order.addCupom(new Coupon({code: "RAP10", discount: 30}))
+    order.addCupom(new Coupon({code: "RAP10", discount: 30, expireDate: new Date("2021-10-10")}))
 })
 
 
@@ -50,7 +50,7 @@ test("should discount based on coupon", function() {
     order.addEntry(new OrderEntry({product: new Product("creme de barbear", 0, {x: 1, y:1, z:1}, 20_00), quantity:2}))
     order.addEntry(new OrderEntry({product: new Product("creme de barbear", 0, {x: 1, y:1, z:1}, 10_00), quantity:2}))
     order.addEntry(new OrderEntry({product: new Product("creme de barbear", 0, {x: 1, y:1, z:1}, 15_00), quantity:2}))
-    order.addCupom(new Coupon({code: "RAP10", discount: 30}))
+    order.addCupom(new Coupon({code: "RAP10", discount: 30, expireDate: new Date("2021-10-10")}))
     expect(order.total).toBe(63_00) 
 })
 
@@ -60,7 +60,7 @@ test("should all the totals match with real math", function() {
     order.addEntry(new OrderEntry({product: new Product("creme de barbear", 0, {x: 1, y:1, z:1}, 20_00), quantity:2}))
     order.addEntry(new OrderEntry({product: new Product("creme de barbear", 0, {x: 1, y:1, z:1}, 10_00), quantity:2}))
     order.addEntry(new OrderEntry({product: new Product("creme de barbear", 0, {x: 1, y:1, z:1}, 15_00), quantity:2}))
-    order.addCupom(new Coupon({code: "RAP10", discount: 30}))
+    order.addCupom(new Coupon({code: "RAP10", discount: 30, expireDate: new Date("2021-10-10")}))
     expect(order.total).toBe(6300) 
     expect(order.discountTotal).toBe(2700) 
     expect(order.subTotal).toBe(9000) 
