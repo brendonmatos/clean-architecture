@@ -19,8 +19,6 @@ export default class Coupon {
 
 
     isExpired(): boolean {
-        console.log(Date.now(), this.expireDate.getTime())
-
         return Date.now() > this.expireDate.getTime();
     }
 }
