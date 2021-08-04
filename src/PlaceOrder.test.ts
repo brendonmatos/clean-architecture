@@ -8,6 +8,7 @@ test("should be create order entry with 3 items and discount", async function() 
         "client": {
             "cpf": "186.360.540-10",
         },
+        "cep": "999999",
         "entries": [
             {
                 "productId": "1",
@@ -19,5 +20,5 @@ test("should be create order entry with 3 items and discount", async function() 
         ]
     })
 
-    expect(output.total).toBe(8100)
+    expect(output.total).toBe(9000)
 })

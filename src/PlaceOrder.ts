@@ -1,6 +1,8 @@
 
 import { Client, IClient } from "./Client";
 import Coupon from "./Coupon";
+import FreightCalculator from "./FreightCalculator";
+import GeoProviderMemory from "./GeoProviderMemory";
 import Order from "./Order"
 import OrderEntry from "./OrderEntry";
 import ProductsRepository from "./ProductsRepository";
@@ -11,6 +13,7 @@ export interface IOrderEntry {
 }
 
 export interface PlaceOrderDTO {
+    cep: string;
     client: IClient;
     entries: IOrderEntry[];
     coupons: string[];
@@ -20,6 +23,7 @@ export default class PlaceOrder {
     coupons: Coupon[];
     orders: Order[];
     products: ProductsRepository
+    geo: GeoProviderMemory;
 
     constructor ({products}) {
         this.coupons = [
@@ -27,20 +31,24 @@ export default class PlaceOrder {
         ];
         this.products = products
         this.orders = [];
+        this.geo = new GeoProviderMemory()
     }
 
     async execute (input: PlaceOrderDTO): Promise<{total: number}> {
         const client = new Client(input.client);
         const order = new Order(client);
 
+        const deliverDistance = await this.geo.distanceBetweenZipCodes("800000", input.cep);
+
         for (const item of input.entries) {
             const product = await this.products.getById(item.productId);
             
             if (!product) {
-                throw new Error("Invalid product id");
+                throw new Error("Product not found");
             }
 
             order.addEntry(new OrderEntry({product, quantity: item.quantity}));
+            order.freight += FreightCalculator.calculate(product, deliverDistance);
         }
 
         if (input.coupons) {

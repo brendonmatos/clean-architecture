@@ -1,4 +1,4 @@
-import { Client } from "./Client"
+import { Client, IClient } from "./Client"
 import Coupon from "./Coupon"
 import OrderEntry from "./OrderEntry"
 import { validateCPF } from "./validateCPF"
@@ -8,6 +8,7 @@ export default class Order {
     client: Client
     entries: OrderEntry[] = []
     coupons: Coupon[] = []
+    freight: number = 0
 
     constructor(client: IClient) {
         if( !validateCPF(client.cpf) ) {
@@ -18,7 +19,9 @@ export default class Order {
     }
 
     get subTotal (): number {
-        return this.entries.reduce( (prev, entry) => entry.getTotal() + prev, 0 )
+        let subTotal = this.entries.reduce( (prev, entry) => entry.getTotal() + prev, 0 )
+        subTotal += this.freight
+        return subTotal
     }
 
     get discountTotal (): number {
