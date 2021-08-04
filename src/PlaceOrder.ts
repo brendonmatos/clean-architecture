@@ -37,7 +37,7 @@ export default class PlaceOrder {
     async execute (input: PlaceOrderDTO): Promise<{total: number}> {
         const order = new Order(input.client);
 
-        const deliverDistance = await this.geo.distanceBetweenZipCodes("800000", input.cep);
+        const deliverDistance = this.geo.distanceBetweenZipCodes("800000", input.cep);
 
         for (const item of input.entries) {
             const product = await this.products.getById(item.productId);
