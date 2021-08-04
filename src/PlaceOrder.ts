@@ -1,6 +1,7 @@
 
 import { Client, IClient } from "./Client";
 import Coupon from "./Coupon";
+import CouponsRepository from "./CouponsRepository";
 import FreightCalculator from "./FreightCalculator";
 import GeoProviderMemory from "./GeoProviderMemory";
 import Order from "./Order"
@@ -21,15 +22,13 @@ export interface PlaceOrderDTO {
 }
 
 export default class PlaceOrder {
-    coupons: Coupon[];
+    coupons: CouponsRepository;
     orders: OrdersRepository;
     products: ProductsRepository
     geo: GeoProviderMemory;
 
-    constructor ({products, orders}) {
-        this.coupons = [
-            new Coupon({code: "RAP10", discount: 10, expireDate: new Date("2021-10-10")})
-        ];
+    constructor ({products, orders, coupons}) {
+        this.coupons = coupons;
         this.products = products
         this.orders = orders
         this.geo = new GeoProviderMemory()
@@ -53,7 +52,7 @@ export default class PlaceOrder {
 
         if (input.coupons) {
             for (const inputCoupon of input.coupons) {
-                const coupon = this.coupons.find(c => c.code === inputCoupon);
+                const coupon = await this.coupons.getById(inputCoupon);
                 if (coupon) order.addCupom(coupon);        
             }
         }
