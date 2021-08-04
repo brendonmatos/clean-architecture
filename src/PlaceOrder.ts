@@ -5,6 +5,7 @@ import FreightCalculator from "./FreightCalculator";
 import GeoProviderMemory from "./GeoProviderMemory";
 import Order from "./Order"
 import OrderEntry from "./OrderEntry";
+import OrdersRepository from "./OrdersRepository";
 import ProductsRepository from "./ProductsRepository";
 
 export interface IOrderEntry {
@@ -21,16 +22,16 @@ export interface PlaceOrderDTO {
 
 export default class PlaceOrder {
     coupons: Coupon[];
-    orders: Order[];
+    orders: OrdersRepository;
     products: ProductsRepository
     geo: GeoProviderMemory;
 
-    constructor ({products}) {
+    constructor ({products, orders}) {
         this.coupons = [
             new Coupon({code: "RAP10", discount: 10, expireDate: new Date("2021-10-10")})
         ];
         this.products = products
-        this.orders = [];
+        this.orders = orders
         this.geo = new GeoProviderMemory()
     }
 
@@ -57,7 +58,7 @@ export default class PlaceOrder {
             }
         }
         
-        this.orders.push(order);
+        this.orders.save(order);
         return {
             total: order.total
         };
