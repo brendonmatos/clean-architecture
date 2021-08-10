@@ -12,7 +12,6 @@ export default class CouponsRepository {
         return this.items[code];
     }
 
-    
     async save(coupon: Coupon): Promise<Coupon>{
         const id = _.uniqueId();
         return this.items[id] = coupon;

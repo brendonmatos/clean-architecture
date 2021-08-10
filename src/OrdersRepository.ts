@@ -10,9 +10,7 @@ const formatUnique = (year, index: number) => {
 
 export default class OrdersRepository {
     items: Order[] = []
-    constructor(){
-    }
-
+    
     async getById(id): Promise<Order | undefined>{
         for (const order of this.items) {
             if (order.id === id) {

@@ -30,5 +30,4 @@ test("should be able to create and restore order", async function() {
     const returnedOrder = await orderRepository.getById(order.id)
     expect(returnedOrder?.id).toBeDefined()
     expect(returnedOrder?.id).toBe(order.id)
-
 })
