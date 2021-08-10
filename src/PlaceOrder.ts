@@ -1,25 +1,26 @@
-import CouponsRepository from "./CouponsRepository";
+import CouponsRepository from "./CouponRepositoryMemory";
 import FreightCalculator from "./FreightCalculator";
+import { GeoProvider } from "./GeoProviderInterface";
 import GeoProviderMemory from "./GeoProviderMemory";
 import Order from "./Order"
 import OrderEntry from "./OrderEntry";
-import OrdersRepository from "./OrdersRepository";
+import OrderRepositoryMemory from "./OrderRepositoryMemory";
 import { PlaceOrderInput } from "./PlaceOrderInput";
 import { PlaceOrderOutput } from "./PlaceOrderOutput";
-import ProductsRepository from "./ProductsRepository";
+import ProductsRepository from "./ProductRepositoryMemory";
 
 
 export default class PlaceOrder {
     coupons: CouponsRepository;
-    orders: OrdersRepository;
+    orders: OrderRepositoryMemory;
     products: ProductsRepository
     geo: GeoProviderMemory;
 
-    constructor ({products, orders, coupons}) {
+    constructor ({products, orders, coupons, geo}: {products: ProductsRepository, orders: OrderRepositoryMemory, coupons: CouponsRepository, geo: GeoProvider}) {
         this.coupons = coupons;
         this.products = products
         this.orders = orders
-        this.geo = new GeoProviderMemory()
+        this.geo = geo
     }
 
     async execute (input: PlaceOrderInput): Promise<PlaceOrderOutput> {

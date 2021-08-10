@@ -1,4 +1,5 @@
 import Order from "./Order";
+import OrderRepository from "./OrderRepository";
 import _ from "lodash";
 
 
@@ -8,10 +9,10 @@ const formatUnique = (year, index: number) => {
     return `${year}${index.toString().padStart(FORMAT_INDEX_SIZE, '0')}`
 }
 
-export default class OrdersRepository {
+export default class OrderRepositoryMemory implements OrderRepository {
     items: Order[] = []
     
-    async getById(id): Promise<Order | undefined>{
+    async getById(id: string): Promise<Order | undefined>{
         for (const order of this.items) {
             if (order.id === id) {
                 return order;

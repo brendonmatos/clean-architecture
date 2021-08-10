@@ -1,10 +1,10 @@
 import { IClient } from "./Client";
 import Order from "./Order";
-import OrdersRepository from "./OrdersRepository";
+import OrderRepositoryMemory from "./OrderRepositoryMemory";
 
 
 test("should be create order entry with 3 items and discount", async function() {
-    const orderRepository = new OrdersRepository();
+    const orderRepository = new OrderRepositoryMemory();
     const toCreate: IClient = {
         cpf: "186.360.540-10"
     } 
@@ -19,7 +19,7 @@ test("should be create order entry with 3 items and discount", async function() 
 })
 
 test("should be able to create and restore order", async function() {
-    const orderRepository = new OrdersRepository();
+    const orderRepository = new OrderRepositoryMemory();
     const toCreate: IClient = {
         cpf: "186.360.540-10"
     } 

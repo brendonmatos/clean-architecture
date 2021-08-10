@@ -1,4 +1,6 @@
-export default class GeoProviderMemory  implements GeoProvider {
+import { GeoProvider } from "./GeoProviderInterface";
+
+export default class GeoProviderMemory implements GeoProvider {
     constructor() {
 
     }

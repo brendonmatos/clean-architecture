@@ -1,10 +1,11 @@
-import CouponsRepository from "./CouponsRepository"
 import GetOrder from "./GetOrder"
 import GetOrderInput from "./GetOrderInput"
-import OrdersRepository from "./OrdersRepository"
 import PlaceOrder from "./PlaceOrder"
 import { PlaceOrderInput } from "./PlaceOrderInput"
-import ProductsRepository from "./ProductsRepository"
+import GeoProviderMemory from "./GeoProviderMemory"
+import OrderRepositoryMemory from "./OrderRepositoryMemory"
+import CouponRepositoryMemory from "./CouponRepositoryMemory"
+import ProductRepositoryMemory from "./ProductRepositoryMemory"
 
 test("should be create order entry with 3 items and discount", async function() {
     const placeOrderInput: PlaceOrderInput = {
@@ -22,13 +23,16 @@ test("should be create order entry with 3 items and discount", async function() 
             "RAP10"
         ]
     }
-    const placeOrder = new PlaceOrder({products: new ProductsRepository(), orders: new OrdersRepository(), coupons: new CouponsRepository()})
+    const ordersRepository = new OrderRepositoryMemory()
+    const productsRepository = new ProductRepositoryMemory()
+    const couponsRepository = new CouponRepositoryMemory()
+    const geoMemory = new GeoProviderMemory()
+    const placeOrder = new PlaceOrder({products: productsRepository, orders: ordersRepository, coupons: couponsRepository, geo: geoMemory})
     const output = await placeOrder.execute(placeOrderInput)
     expect(output.total).toBe(9000)
 })
 
 test("should be able to create an order and fetch it after", async function() {
-    const ordersRepository = new OrdersRepository()
     const placeOrderInput: PlaceOrderInput = {
         "client": {
             "cpf": "186.360.540-10",
@@ -44,7 +48,11 @@ test("should be able to create an order and fetch it after", async function() {
             "RAP10"
         ]
     }
-    const placeOrder = new PlaceOrder({products: new ProductsRepository(), orders: ordersRepository, coupons: new CouponsRepository()})
+    const ordersRepository = new OrderRepositoryMemory()
+    const productsRepository = new ProductRepositoryMemory()
+    const couponsRepository = new CouponRepositoryMemory()
+    const geoMemory = new GeoProviderMemory()
+    const placeOrder = new PlaceOrder({products: productsRepository, orders: ordersRepository, coupons: couponsRepository, geo: geoMemory})
     const placeOrderOuput = await placeOrder.execute(placeOrderInput)
     const getOrder = new GetOrder({orders: ordersRepository})
     const getOrderInput: GetOrderInput = {

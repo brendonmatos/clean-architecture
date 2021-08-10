@@ -1,7 +1,9 @@
 import { Product } from "./Product";
+import ProductRepository from "./ProductRepository";
 
-export default class ProductsRepository {
+export default class ProductRepositoryMemory implements ProductRepository{
     items: { [key: string]: Product };
+    
     constructor(){
         this.items = {
             "1": new Product("barbeador", 100, { x: 5, y: 5, z: 10 }, 9000),

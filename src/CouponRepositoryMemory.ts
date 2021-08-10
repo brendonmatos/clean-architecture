@@ -1,6 +1,6 @@
 import Coupon from "./Coupon";
 import _ from "lodash";
-export default class CouponsRepository {
+export default class CouponRepositoryMemory {
     items: { [key: string]: Coupon };
     constructor(){
         this.items = {

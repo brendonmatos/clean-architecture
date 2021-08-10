@@ -1,10 +1,10 @@
 import GetOrderInput from "./GetOrderInput";
 import GetOrderOutput from "./GetOrderOutput";
-import OrdersRepository from "./OrdersRepository";
+import OrderRepositoryMemory from "./OrderRepositoryMemory";
 
 export default class GetOrder {
-    orders: OrdersRepository
-    constructor({orders}: {orders: OrdersRepository}) {
+    orders: OrderRepositoryMemory
+    constructor({orders}: {orders: OrderRepositoryMemory}) {
         this.orders = orders;
     }
 
