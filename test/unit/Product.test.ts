@@ -16,7 +16,8 @@ Geladeira: 40kg / 1 m3 = 40kg/m3
 
 */
 
-import { Product } from "./Product"
+import { Product } from "../../src/domain/entity/Product"
+
 
 test('product calculate camera density', () => {
     const product = new Product("camera", 1_000, {x: 20, y: 15, z: 10}, 200)

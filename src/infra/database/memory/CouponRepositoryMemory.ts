@@ -1,5 +1,5 @@
-import Coupon from "./Coupon";
 import _ from "lodash";
+import Coupon from "../../../domain/entity/Coupon";
 export default class CouponRepositoryMemory {
     items: { [key: string]: Coupon };
     constructor(){

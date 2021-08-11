@@ -1,19 +1,18 @@
-import CouponsRepository from "./CouponRepositoryMemory";
-import FreightCalculator from "./FreightCalculator";
-import { GeoProvider } from "./GeoProviderInterface";
-import GeoProviderMemory from "./GeoProviderMemory";
-import Order from "./Order"
-import OrderEntry from "./OrderEntry";
-import OrderRepositoryMemory from "./OrderRepositoryMemory";
+import Order from "../domain/entity/Order";
+import OrderEntry from "../domain/entity/OrderEntry";
+import { GeoProvider } from "../domain/gateway/GeoProvider";
+import FreightCalculator from "../domain/gateway/FreightCalculator";
+import GeoProviderMemory from "../infra/database/memory/GeoProviderMemory";
+import OrderRepositoryMemory from "../infra/database/memory/OrderRepositoryMemory";
 import { PlaceOrderInput } from "./PlaceOrderInput";
 import { PlaceOrderOutput } from "./PlaceOrderOutput";
-import ProductsRepository from "./ProductRepositoryMemory";
-
+import CouponRepository from "../domain/repository/CouponRepository";
+import ProductRepository from "../domain/repository/ProductRepository";
 
 export default class PlaceOrder {
-    coupons: CouponsRepository;
+    coupons: CouponRepository;
     orders: OrderRepositoryMemory;
-    products: ProductsRepository
+    products: ProductRepository
     geo: GeoProviderMemory;
 
     constructor ({products, orders, coupons, geo}: {products: ProductsRepository, orders: OrderRepositoryMemory, coupons: CouponsRepository, geo: GeoProvider}) {

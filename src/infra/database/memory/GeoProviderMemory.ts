@@ -1,4 +1,4 @@
-import { GeoProvider } from "./GeoProviderInterface";
+import { GeoProvider } from "./domain/gateway/GeoProvider";
 
 export default class GeoProviderMemory implements GeoProvider {
     constructor() {

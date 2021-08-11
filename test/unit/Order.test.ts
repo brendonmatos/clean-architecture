@@ -1,7 +1,7 @@
-import Coupon from './Coupon'
-import Order from './Order'
-import OrderEntry from './OrderEntry'
-import { Product } from './Product'
+import Coupon from "../../src/domain/entity/Coupon"
+import Order from "../../src/domain/entity/Order"
+import OrderEntry from "../../src/domain/entity/OrderEntry"
+import { Product } from "../../src/domain/entity/Product"
 
 test("Should not be able to create order with invalid cpf", function() {
     const createOrder = () => {

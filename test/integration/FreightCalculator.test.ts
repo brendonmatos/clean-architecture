@@ -1,6 +1,5 @@
-
-import FreightCalculator from "./FreightCalculator"
-import { Product } from "./Product"
+import { Product } from "../../src/domain/entity/Product"
+import FreightCalculator from "../../src/domain/gateway/FreightCalculator"
 
 test(`should calculate shipping price`, async () => {
     const product = new Product("camera", 1_000, {x: 20, y: 15, z: 10}, 200)

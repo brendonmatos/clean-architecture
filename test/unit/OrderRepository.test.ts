@@ -1,7 +1,6 @@
-import { IClient } from "./Client";
-import Order from "./Order";
-import OrderRepositoryMemory from "./OrderRepositoryMemory";
-
+import { IClient } from "../../src/domain/entity/Client";
+import Order from "../../src/domain/entity/Order";
+import OrderRepositoryMemory from "../../src/infra/database/memory/OrderRepositoryMemory";
 
 test("should be create order entry with 3 items and discount", async function() {
     const orderRepository = new OrderRepositoryMemory();
@@ -27,6 +26,7 @@ test("should be able to create and restore order", async function() {
     const order = new Order(toCreate, date)
     await orderRepository.save(order)
     expect(order.id).toBeDefined()
+    if(!order.id) throw new Error("order not found")
     const returnedOrder = await orderRepository.getById(order.id)
     expect(returnedOrder?.id).toBeDefined()
     expect(returnedOrder?.id).toBe(order.id)

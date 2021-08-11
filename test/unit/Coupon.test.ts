@@ -1,4 +1,5 @@
-import Coupon from "./Coupon"
+import Coupon from "../../src/domain/entity/Coupon"
+
 
 test("Should refuse expired coupons", function() {
     const coupon = new Coupon({code: "12093123", discount: 10, expireDate: new Date('2020-02-01') })
