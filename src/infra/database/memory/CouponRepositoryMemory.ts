@@ -1,6 +1,7 @@
 import _ from "lodash";
 import Coupon from "../../../domain/entity/Coupon";
-export default class CouponRepositoryMemory {
+import CouponRepository from "../../../domain/repository/CouponRepository";
+export default class CouponRepositoryMemory implements CouponRepository{
     items: { [key: string]: Coupon };
     constructor(){
         this.items = {
@@ -8,7 +9,7 @@ export default class CouponRepositoryMemory {
         }
     }
 
-    async getById(code: string): Promise<Coupon>{
+    async getById(code: string): Promise<Coupon | undefined>{
         return this.items[code];
     }
 

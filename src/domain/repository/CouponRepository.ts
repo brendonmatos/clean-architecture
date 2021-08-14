@@ -1,5 +1,5 @@
 import Coupon from "../entity/Coupon";
 
 export default interface CouponRepository {
-    getById( id: string ): Coupon | undefined
+    getById( id: string ): Promise<Coupon | undefined>
 }

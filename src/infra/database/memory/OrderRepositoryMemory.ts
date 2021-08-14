@@ -1,6 +1,7 @@
-import Order from "./domain/entity/Order";
-import OrderRepository from "./domain/repository/OrderRepository";
+
 import _ from "lodash";
+import Order from "../../../domain/entity/Order";
+import OrderRepository from "../../../domain/repository/OrderRepository";
 
 
 const FORMAT_INDEX_SIZE = 8
