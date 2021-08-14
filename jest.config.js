@@ -4,9 +4,6 @@ module.exports = {
         "esbuild-jest", 
         { 
           sourcemap: true,
-          loaders: {
-            '.spec.ts': 'tsx'
-          }
         } 
       ]
     }
