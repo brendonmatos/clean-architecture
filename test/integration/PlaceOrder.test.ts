@@ -23,11 +23,11 @@ test("should be create order entry with 3 items and discount", async function() 
             "RAP10"
         ]
     }
-    const ordersRepository = new OrderRepositoryMemory()
-    const productsRepository = new ProductRepositoryMemory()
-    const couponsRepository = new CouponRepositoryMemory()
+    const orderRepository = new OrderRepositoryMemory()
+    const productRepository = new ProductRepositoryMemory()
+    const couponRepository = new CouponRepositoryMemory()
     const geoMemory = new GeoProviderMemory()
-    const placeOrder = new PlaceOrder({products: productsRepository, orders: ordersRepository, coupons: couponsRepository, geo: geoMemory})
+    const placeOrder = new PlaceOrder({products: productRepository, orders: orderRepository, coupons: couponRepository, geo: geoMemory})
     const output = await placeOrder.execute(placeOrderInput)
     expect(output.total).toBe(9000)
 })
@@ -48,13 +48,13 @@ test("should be able to create an order and fetch it after", async function() {
             "RAP10"
         ]
     }
-    const ordersRepository = new OrderRepositoryMemory()
-    const productsRepository = new ProductRepositoryMemory()
-    const couponsRepository = new CouponRepositoryMemory()
+    const orderRepository = new OrderRepositoryMemory()
+    const productRepository = new ProductRepositoryMemory()
+    const couponRepository = new CouponRepositoryMemory()
     const geoMemory = new GeoProviderMemory()
-    const placeOrder = new PlaceOrder({products: productsRepository, orders: ordersRepository, coupons: couponsRepository, geo: geoMemory})
+    const placeOrder = new PlaceOrder({products: productRepository, orders: orderRepository, coupons: couponRepository, geo: geoMemory})
     const placeOrderOuput = await placeOrder.execute(placeOrderInput)
-    const getOrder = new GetOrder({orders: ordersRepository})
+    const getOrder = new GetOrder({orders: orderRepository})
     const getOrderInput: GetOrderInput = {
         id: placeOrderOuput.id
     } 
