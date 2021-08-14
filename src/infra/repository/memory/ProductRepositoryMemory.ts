@@ -13,7 +13,7 @@ export default class ProductRepositoryMemory implements ProductRepository{
         }
     }
 
-    async getById(id): Promise<Product>{
+    async getById(id: string): Promise<Product>{
         return this.items[id];
     }
 }
