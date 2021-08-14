@@ -1,6 +1,6 @@
 import { IClient } from "../../src/domain/entity/Client";
 import Order from "../../src/domain/entity/Order";
-import OrderRepositoryMemory from "../../src/infra/database/memory/OrderRepositoryMemory";
+import OrderRepositoryMemory from "../../src/infra/repository/memory/OrderRepositoryMemory";
 
 test("should be create order entry with 3 items and discount", async function() {
     const orderRepository = new OrderRepositoryMemory();

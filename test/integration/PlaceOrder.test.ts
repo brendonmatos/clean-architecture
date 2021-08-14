@@ -2,10 +2,10 @@ import GetOrder from "../../src/application/GetOrder"
 import GetOrderInput from "../../src/application/GetOrderInput"
 import PlaceOrder from "../../src/application/PlaceOrder"
 import { PlaceOrderInput } from "../../src/application/PlaceOrderInput"
-import CouponRepositoryMemory from "../../src/infra/database/memory/CouponRepositoryMemory"
-import GeoProviderMemory from "../../src/infra/database/memory/GeoProviderMemory"
-import OrderRepositoryMemory from "../../src/infra/database/memory/OrderRepositoryMemory"
-import ProductRepositoryMemory from "../../src/infra/database/memory/ProductRepositoryMemory"
+import CouponRepositoryMemory from "../../src/infra/repository/memory/CouponRepositoryMemory"
+import GeoProviderMemory from "../../src/infra/gateway/memory/GeoProviderMemory"
+import OrderRepositoryMemory from "../../src/infra/repository/memory/OrderRepositoryMemory"
+import ProductRepositoryMemory from "../../src/infra/repository/memory/ProductRepositoryMemory"
 
 test("should be create order entry with 3 items and discount", async function() {
     const placeOrderInput: PlaceOrderInput = {
