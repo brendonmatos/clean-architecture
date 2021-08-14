@@ -36,7 +36,7 @@ export default class PlaceOrder {
         }
         if (input.coupons) {
             for (const inputCoupon of input.coupons) {
-                const coupon = await this.coupons.getById(inputCoupon);
+                const coupon = await this.coupons.getByCode(inputCoupon);
                 if (coupon) order.addCupom(coupon);        
             }
         }

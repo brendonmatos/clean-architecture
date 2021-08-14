@@ -9,7 +9,7 @@ export default class CouponRepositoryMemory implements CouponRepository{
         }
     }
 
-    async getById(code: string): Promise<Coupon | undefined>{
+    async getByCode(code: string): Promise<Coupon | undefined>{
         return this.items[code];
     }
 
