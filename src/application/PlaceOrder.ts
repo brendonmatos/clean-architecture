@@ -3,19 +3,19 @@ import OrderEntry from "../domain/entity/OrderEntry";
 import { GeoProvider } from "../domain/gateway/GeoProvider";
 import FreightCalculator from "../domain/service/FreightCalculator";
 import GeoProviderMemory from "../infra/gateway/memory/GeoProviderMemory";
-import OrderRepositoryMemory from "../infra/repository/memory/OrderRepositoryMemory";
 import { PlaceOrderInput } from "./PlaceOrderInput";
 import { PlaceOrderOutput } from "./PlaceOrderOutput";
 import CouponRepository from "../domain/repository/CouponRepository";
 import ProductRepository from "../domain/repository/ProductRepository";
+import OrderRepository from "../domain/repository/OrderRepository";
 
 export default class PlaceOrder {
     coupons: CouponRepository;
-    orders: OrderRepositoryMemory;
+    orders: OrderRepository;
     products: ProductRepository
     geo: GeoProviderMemory;
 
-    constructor ({products, orders, coupons, geo}: {products: ProductRepository, orders: OrderRepositoryMemory, coupons: CouponRepository, geo: GeoProvider}) {
+    constructor ({products, orders, coupons, geo}: {products: ProductRepository, orders: OrderRepository, coupons: CouponRepository, geo: GeoProvider}) {
         this.coupons = coupons;
         this.products = products
         this.orders = orders

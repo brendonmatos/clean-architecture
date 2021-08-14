@@ -20,6 +20,8 @@
   "homepage": "https://github.com/brendonmatos/clean-architecture#readme",
   "dependencies": {
     "lodash": "^4.17.21",
+    "sqlite": "^4.0.23",
+    "sqlite3": "^5.0.2",
     "typescript": "^4.3.5"
   },
   "devDependencies": {

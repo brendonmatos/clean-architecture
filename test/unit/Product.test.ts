@@ -20,24 +20,24 @@ import { Product } from "../../src/domain/entity/Product"
 
 
 test('product calculate camera density', () => {
-    const product = new Product("camera", 1_000, {x: 20, y: 15, z: 10}, 200)
+    const product = new Product("1", "camera", 1_000, {x: 20, y: 15, z: 10}, 200)
     expect(product.volume).toBe(3000)
 })
 
 test('product calculate camera density', () => {
-    const product = new Product("camera", 1_000, {x: 20, y: 15, z: 10}, 200)
+    const product = new Product("1", "camera", 1_000, {x: 20, y: 15, z: 10}, 200)
     expect(product.volume).toBe(3000)
     expect(product.density).toBeCloseTo(0.333, 3)
 })
 
 test('product calculate guitar density', () => {
-    const product = new Product("guitar", 3_000, {x: 100, y: 30, z: 10}, 200)
+    const product = new Product("1", "guitar", 3_000, {x: 100, y: 30, z: 10}, 200)
     expect(product.volume).toBe(30000)
     expect(product.density).toBeCloseTo(0.1, 3)
 })
 
 test('product calculate fridge density', () => {
-    const product = new Product("geladeira", 40_000, {x: 200, y: 100, z: 50}, 200)
+    const product = new Product("1", "geladeira", 40_000, {x: 200, y: 100, z: 50}, 200)
     expect(product.volume).toBe(1000000)
     expect(product.density).toBeCloseTo(0.04, 3)
 })
