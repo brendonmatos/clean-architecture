@@ -25,7 +25,7 @@ export default class PlaceOrder {
     async execute (input: PlaceOrderInput): Promise<PlaceOrderOutput> {
         const order = new Order(input.client);
         order.deliveryCEP = input.cep
-        const deliverDistance = this.geo.distanceBetweenZipCodes("800000", order.deliveryCEP);
+        const deliverDistance = await this.geo.distanceBetweenZipCodes("800000", order.deliveryCEP);
         for (const item of input.entries) {
             const product = await this.products.getById(item.productId);
             if (!product) {
