@@ -5,17 +5,19 @@ import { PlaceOrderInput } from "../../src/application/PlaceOrderInput"
 import CouponRepositoryMemory from "../../src/infra/repository/memory/CouponRepositoryMemory"
 import GeoProviderMemory from "../../src/infra/gateway/memory/GeoProviderMemory"
 import OrderRepositoryMemory from "../../src/infra/repository/memory/OrderRepositoryMemory"
-import ProductRepositoryMemory from "../../src/infra/repository/memory/ProductRepositoryMemory"
 import DatabaseSqlite from "../../src/infra/database/DatabaseSqlite"
 import ProductRepositorySqlite from "../../src/infra/repository/sqlite/ProductRepositorySqlite"
 import { Product } from "../../src/domain/entity/Product"
 
-const databaseSqlite = new DatabaseSqlite(":memory:")
+const databaseSqlite = new DatabaseSqlite("./database.sqlite")
 
 beforeAll(async () => {
     await databaseSqlite.connect()
 
     await databaseSqlite.db.exec(`
+    DROP TABLE IF EXISTS products;
+    DROP TABLE IF EXISTS orders;
+    DROP TABLE IF EXISTS clients;
     CREATE TABLE clients (cpf TEXT PRIMARY KEY);
     CREATE TABLE orders (
         id TEXT PRIMARY KEY,
