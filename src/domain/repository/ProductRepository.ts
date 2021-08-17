@@ -1,5 +1,5 @@
-import { Product } from "./Product";
+import { Product } from "../entity/Product";
 
 export default interface ProductRepository {
-    getById(id: string): Promise<Product>
+  getById(id: string): Promise<Product>;
 }
