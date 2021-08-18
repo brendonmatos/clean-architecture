@@ -98,7 +98,7 @@ test("should be able to create an order and fetch it after", async function () {
     geo: geoMemory,
   });
   const placeOrderOuput = await placeOrder.execute(placeOrderInput);
-  const getOrder = new GetOrder({ orders: orderRepository });
+  const getOrder = new GetOrder({ orderRepository, productRepository });
   const getOrderInput: GetOrderInput = {
     code: placeOrderOuput.code,
   };
