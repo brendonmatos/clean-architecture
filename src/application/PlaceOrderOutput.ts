@@ -1,4 +1,4 @@
 export interface PlaceOrderOutput {
-    id: string;
-total: number
+  code: string;
+  total: number;
 }

@@ -43,38 +43,9 @@ beforeAll(async () => {
   );
 });
 
-test("should be create order entry with 3 items and discount", async function () {
-  const placeOrderInput: PlaceOrderInput = {
-    date: new Date(),
-    client: {
-      cpf: "186.360.540-10",
-    },
-    cep: "999999",
-    entries: [
-      {
-        productId: "1",
-        quantity: 1,
-      },
-    ],
-    coupons: ["RAP10"],
-  };
-  const orderRepository = new OrderRepositoryMemory();
-  const productRepository = new ProductRepositorySqlite(databaseSqlite);
-  const couponRepository = new CouponRepositoryMemory();
-  const geoMemory = new GeoProviderMemory();
-  const placeOrder = new PlaceOrder({
-    products: productRepository,
-    orders: orderRepository,
-    coupons: couponRepository,
-    geo: geoMemory,
-  });
-  const output = await placeOrder.execute(placeOrderInput);
-  expect(output.total).toBe(9000);
-});
-
 test("should be able to create an order and fetch it after", async function () {
   const placeOrderInput: PlaceOrderInput = {
-    date: new Date(),
+    date: new Date("2020-01-20"),
     client: {
       cpf: "186.360.540-10",
     },
@@ -97,11 +68,7 @@ test("should be able to create an order and fetch it after", async function () {
     coupons: couponRepository,
     geo: geoMemory,
   });
+  await placeOrder.execute(placeOrderInput);
   const placeOrderOuput = await placeOrder.execute(placeOrderInput);
-  const getOrder = new GetOrder({ orders: orderRepository });
-  const getOrderInput: GetOrderInput = {
-    code: placeOrderOuput.code,
-  };
-  const getOrderOutput = await getOrder.execute(getOrderInput);
-  expect(getOrderOutput.code).toBe(placeOrderOuput.code);
+  expect(placeOrderOuput.code).toBe("202000000002");
 });

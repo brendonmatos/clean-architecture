@@ -1,5 +1,7 @@
 import Order from "../entity/Order";
 
 export default interface OrderRepository {
-    getById( id: string ): Promise<Order | undefined>
+  getByCode(id: string): Promise<Order | undefined>;
+  save(order: Order): Promise<Order>;
+  count(): Promise<number>;
 }

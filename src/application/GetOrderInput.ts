@@ -1,3 +1,3 @@
 export default interface GetOrderInput {
-    id: string;
+  code: string;
 }

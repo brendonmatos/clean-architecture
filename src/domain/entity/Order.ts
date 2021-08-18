@@ -1,47 +1,49 @@
-import { Client, IClient } from "./Client"
-import Coupon from "./Coupon"
-import OrderEntry from "./OrderEntry"
+import { Client, IClient } from "./Client";
+import Coupon from "./Coupon";
+import OrderCode from "./OrderCode";
+import OrderEntry from "./OrderEntry";
 
 export default class Order {
-        
-    id: string | undefined
-    client: Client
-    entries: OrderEntry[] = []
-    coupons: Coupon[] = []
-    freight: number = 0
-    date: Date
-    deliveryCEP: string | undefined
+  code: OrderCode;
+  client: Client;
+  entries: OrderEntry[] = [];
+  coupons: Coupon[] = [];
+  freight: number = 0;
+  date: Date;
+  deliveryCEP: string | undefined;
 
-    constructor(client: IClient, date: Date = new Date()) {
-        this.client = new Client(client)
-        this.date = date
-    }
+  constructor(client: IClient, date: Date = new Date(), sequence: number = 1) {
+    this.code = new OrderCode(date, sequence);
+    this.client = new Client(client);
+    this.date = date;
+  }
 
-    get subTotal (): number {
-        let subTotal = this.entries.reduce( (prev, entry) => entry.getTotal() + prev, 0 )
-        subTotal += this.freight
-        return subTotal
-    }
+  get subTotal(): number {
+    let subTotal = this.entries.reduce(
+      (prev, entry) => entry.getTotal() + prev,
+      0
+    );
+    subTotal += this.freight;
+    return subTotal;
+  }
 
-    get discountTotal (): number {
-        return this.subTotal - this.total
-    }
+  get discountTotal(): number {
+    return this.subTotal - this.total;
+  }
 
-    get total (): number {
-        const applyCoupon = (value: number, coupon: Coupon) => {
-            return coupon.apply(value)
-        }
+  get total(): number {
+    const applyCoupon = (value: number, coupon: Coupon) => {
+      return coupon.apply(value);
+    };
 
-        return this.coupons
-            .reduce(applyCoupon, this.subTotal)   
-    }
+    return this.coupons.reduce(applyCoupon, this.subTotal);
+  }
 
-    addEntry(entry: OrderEntry) {
-        this.entries.push(entry)
-    }
+  addEntry(entry: OrderEntry) {
+    this.entries.push(entry);
+  }
 
-    addCupom(coupon: Coupon) {
-        this.coupons.push(coupon)
-    }
-
+  addCupom(coupon: Coupon) {
+    this.coupons.push(coupon);
+  }
 }
