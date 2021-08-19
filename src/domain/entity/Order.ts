@@ -11,11 +11,13 @@ export default class Order {
   freight: number = 0;
   date: Date;
   deliveryCEP: string | undefined;
+  serial: number;
 
   constructor(client: IClient, date: Date = new Date(), sequence: number = 1) {
     this.code = new OrderCode(date, sequence);
     this.client = new Client(client);
     this.date = date;
+    this.serial = sequence;
   }
 
   get subTotal(): number {

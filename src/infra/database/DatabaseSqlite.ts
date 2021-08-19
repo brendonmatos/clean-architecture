@@ -20,10 +20,10 @@ export default class DatabaseSqlite implements DatabaseSQL {
   }
 
   static getInstance() {
-    if (!this.instance) {
-      this.instance = new DatabaseSqlite("./database.sqlite");
+    if (!DatabaseSqlite.instance) {
+      DatabaseSqlite.instance = new DatabaseSqlite("./database.sqlite");
     }
-    return this.instance;
+    return DatabaseSqlite.instance;
   }
 
   get db(): sqlite.Database {
@@ -43,5 +43,9 @@ export default class DatabaseSqlite implements DatabaseSQL {
 
   one(query: string, parameters: any[]) {
     return this.db.get(query, parameters);
+  }
+
+  none(query: string, parameters: any): void {
+    this.db.exec(query);
   }
 }

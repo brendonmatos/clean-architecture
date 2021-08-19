@@ -16,7 +16,7 @@ export default class OrderRepositoryMemory implements OrderRepository {
     return undefined;
   }
 
-  static getInstance(): OrderRepository {
+  static getInstance(): OrderRepositoryMemory {
     if (!OrderRepositoryMemory.instance) {
       OrderRepositoryMemory.instance = new OrderRepositoryMemory();
     }
@@ -33,5 +33,9 @@ export default class OrderRepositoryMemory implements OrderRepository {
   }
   count(): Promise<number> {
     return Promise.resolve(this.items.length);
+  }
+  clean(): Promise<void> {
+    this.items = [];
+    return Promise.resolve();
   }
 }
