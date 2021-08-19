@@ -8,32 +8,23 @@ import { PlaceOrderOutput } from "./PlaceOrderOutput";
 import CouponRepository from "../domain/repository/CouponRepository";
 import ProductRepository from "../domain/repository/ProductRepository";
 import OrderRepository from "../domain/repository/OrderRepository";
+import RepositoryFactory from "../domain/factory/RepositoryFactory";
 
 export default class PlaceOrder {
-  coupons: CouponRepository;
-  orders: OrderRepository;
-  products: ProductRepository;
+  couponRepository: CouponRepository;
+  orderRepository: OrderRepository;
+  productRepository: ProductRepository;
   geo: GeoProviderMemory;
 
-  constructor({
-    products,
-    orders,
-    coupons,
-    geo,
-  }: {
-    products: ProductRepository;
-    orders: OrderRepository;
-    coupons: CouponRepository;
-    geo: GeoProvider;
-  }) {
-    this.coupons = coupons;
-    this.products = products;
-    this.orders = orders;
+  constructor(repositoryFactory: RepositoryFactory, geo: GeoProvider) {
+    this.orderRepository = repositoryFactory.createOrderRepository();
+    this.productRepository = repositoryFactory.createProductRepository();
+    this.couponRepository = repositoryFactory.createCouponRepository();
     this.geo = geo;
   }
 
   async execute(input: PlaceOrderInput): Promise<PlaceOrderOutput> {
-    const sequence = await this.orders.count();
+    const sequence = await this.orderRepository.count();
     const order = new Order(input.client, input.date, sequence + 1);
     order.deliveryCEP = input.cep;
     const deliverDistance = await this.geo.distanceBetweenZipCodes(
@@ -41,7 +32,7 @@ export default class PlaceOrder {
       order.deliveryCEP
     );
     for (const item of input.entries) {
-      const product = await this.products.getById(item.productId);
+      const product = await this.productRepository.getById(item.productId);
       if (!product) {
         throw new Error("Product not found");
       }
@@ -50,11 +41,11 @@ export default class PlaceOrder {
     }
     if (input.coupons) {
       for (const inputCoupon of input.coupons) {
-        const coupon = await this.coupons.getByCode(inputCoupon);
+        const coupon = await this.couponRepository.getByCode(inputCoupon);
         if (coupon) order.addCupom(coupon);
       }
     }
-    await this.orders.save(order);
+    await this.orderRepository.save(order);
     if (!order.code.value) {
       throw new Error("Order not saved");
     }

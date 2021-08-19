@@ -1,9 +1,10 @@
 import _ from "lodash";
 import Coupon from "../../../domain/entity/Coupon";
 import CouponRepository from "../../../domain/repository/CouponRepository";
-export default class CouponRepositoryMemory implements CouponRepository {
+import DatabaseSQL from "../../database/DatabaseSQL";
+export default class CouponRepositorySqlite implements CouponRepository {
   items: { [key: string]: Coupon };
-  constructor() {
+  constructor(database: DatabaseSQL) {
     this.items = {
       RAP10: new Coupon({
         code: "RAP10",

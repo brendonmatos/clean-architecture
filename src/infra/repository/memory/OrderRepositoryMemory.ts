@@ -5,6 +5,8 @@ import OrderRepository from "../../../domain/repository/OrderRepository";
 export default class OrderRepositoryMemory implements OrderRepository {
   items: Order[] = [];
 
+  static instance: OrderRepositoryMemory;
+
   async getByCode(id: string): Promise<Order | undefined> {
     for (const order of this.items) {
       if (order.code.value === id) {
@@ -12,6 +14,13 @@ export default class OrderRepositoryMemory implements OrderRepository {
       }
     }
     return undefined;
+  }
+
+  static getInstance(): OrderRepository {
+    if (!OrderRepositoryMemory.instance) {
+      OrderRepositoryMemory.instance = new OrderRepositoryMemory();
+    }
+    return OrderRepositoryMemory.instance;
   }
 
   async save(order: Order): Promise<Order> {

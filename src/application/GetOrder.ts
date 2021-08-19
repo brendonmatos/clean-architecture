@@ -1,3 +1,4 @@
+import RepositoryFactory from "../domain/factory/RepositoryFactory";
 import OrderRepository from "../domain/repository/OrderRepository";
 import ProductRepository from "../domain/repository/ProductRepository";
 import GetOrderInput from "./GetOrderInput";
@@ -5,15 +6,9 @@ import GetOrderOutput from "./GetOrderOutput";
 export default class GetOrder {
   orderRepository: OrderRepository;
   productRepository: ProductRepository;
-  constructor({
-    orderRepository,
-    productRepository,
-  }: {
-    orderRepository: OrderRepository;
-    productRepository: ProductRepository;
-  }) {
-    this.orderRepository = orderRepository;
-    this.productRepository = productRepository;
+  constructor(repositoryFactory: RepositoryFactory) {
+    this.orderRepository = repositoryFactory.createOrderRepository();
+    this.productRepository = repositoryFactory.createProductRepository();
   }
 
   public async execute(input: GetOrderInput): Promise<GetOrderOutput> {

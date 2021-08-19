@@ -8,6 +8,7 @@ import OrderRepositoryMemory from "../../src/infra/repository/memory/OrderReposi
 import DatabaseSqlite from "../../src/infra/database/DatabaseSqlite";
 import ProductRepositorySqlite from "../../src/infra/repository/sqlite/ProductRepositorySqlite";
 import { Product } from "../../src/domain/entity/Product";
+import MemoryRepositoryFactory from "../../src/infra/factory/MemoryRepositoryFactory";
 
 const databaseSqlite = new DatabaseSqlite("./database.sqlite");
 
@@ -58,16 +59,10 @@ test("should be able to create an order and fetch it after", async function () {
     ],
     coupons: ["RAP10"],
   };
-  const orderRepository = new OrderRepositoryMemory();
-  const productRepository = new ProductRepositorySqlite(databaseSqlite);
-  const couponRepository = new CouponRepositoryMemory();
   const geoMemory = new GeoProviderMemory();
-  const placeOrder = new PlaceOrder({
-    products: productRepository,
-    orders: orderRepository,
-    coupons: couponRepository,
-    geo: geoMemory,
-  });
+  // const repositoryFactory = new DatabaseSQLRepositoryFactory();
+  const repositoryFactory = new MemoryRepositoryFactory();
+  const placeOrder = new PlaceOrder(repositoryFactory, geoMemory);
   await placeOrder.execute(placeOrderInput);
   const placeOrderOuput = await placeOrder.execute(placeOrderInput);
   expect(placeOrderOuput.code).toBe("202000000002");

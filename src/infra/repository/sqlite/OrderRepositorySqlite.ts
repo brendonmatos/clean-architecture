@@ -27,4 +27,9 @@ export default class OrderRepositorySqlite implements OrderRepository {
       [order.id, order.client.cpf, order.date]
     );
   }
+
+  async count(): Promise<number> {
+    const result = await this.database.one("select count(*) from orders", []);
+    return Number.parseInt(result);
+  }
 }

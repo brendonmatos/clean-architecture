@@ -2,16 +2,14 @@ import GetOrder from "../../src/application/GetOrder";
 import GetOrderInput from "../../src/application/GetOrderInput";
 import PlaceOrder from "../../src/application/PlaceOrder";
 import { PlaceOrderInput } from "../../src/application/PlaceOrderInput";
-import CouponRepositoryMemory from "../../src/infra/repository/memory/CouponRepositoryMemory";
 import GeoProviderMemory from "../../src/infra/gateway/memory/GeoProviderMemory";
-import OrderRepositoryMemory from "../../src/infra/repository/memory/OrderRepositoryMemory";
 import DatabaseSqlite from "../../src/infra/database/DatabaseSqlite";
 import ProductRepositorySqlite from "../../src/infra/repository/sqlite/ProductRepositorySqlite";
 import { Product } from "../../src/domain/entity/Product";
-
-const databaseSqlite = new DatabaseSqlite("./database.sqlite");
+import MemoryRepositoryFactory from "../../src/infra/factory/MemoryRepositoryFactory";
 
 beforeAll(async () => {
+  const databaseSqlite = DatabaseSqlite.getInstance();
   await databaseSqlite.connect();
 
   await databaseSqlite.db.exec(`
@@ -58,16 +56,11 @@ test("should be create order entry with 3 items and discount", async function ()
     ],
     coupons: ["RAP10"],
   };
-  const orderRepository = new OrderRepositoryMemory();
-  const productRepository = new ProductRepositorySqlite(databaseSqlite);
-  const couponRepository = new CouponRepositoryMemory();
+
   const geoMemory = new GeoProviderMemory();
-  const placeOrder = new PlaceOrder({
-    products: productRepository,
-    orders: orderRepository,
-    coupons: couponRepository,
-    geo: geoMemory,
-  });
+  // const repositoryFactory = new DatabaseSQLRepositoryFactory();
+  const repositoryFactory = new MemoryRepositoryFactory();
+  const placeOrder = new PlaceOrder(repositoryFactory, geoMemory);
   const output = await placeOrder.execute(placeOrderInput);
   expect(output.total).toBe(9000);
 });
@@ -87,18 +80,12 @@ test("should be able to create an order and fetch it after", async function () {
     ],
     coupons: ["RAP10"],
   };
-  const orderRepository = new OrderRepositoryMemory();
-  const productRepository = new ProductRepositorySqlite(databaseSqlite);
-  const couponRepository = new CouponRepositoryMemory();
   const geoMemory = new GeoProviderMemory();
-  const placeOrder = new PlaceOrder({
-    products: productRepository,
-    orders: orderRepository,
-    coupons: couponRepository,
-    geo: geoMemory,
-  });
+  // const repositoryFactory = new DatabaseSQLRepositoryFactory();
+  const repositoryFactory = new MemoryRepositoryFactory();
+  const placeOrder = new PlaceOrder(repositoryFactory, geoMemory);
   const placeOrderOuput = await placeOrder.execute(placeOrderInput);
-  const getOrder = new GetOrder({ orderRepository, productRepository });
+  const getOrder = new GetOrder(repositoryFactory);
   const getOrderInput: GetOrderInput = {
     code: placeOrderOuput.code,
   };
