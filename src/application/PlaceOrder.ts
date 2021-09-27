@@ -52,6 +52,7 @@ export default class PlaceOrder {
     return {
       code: order.code.value,
       total: order.total,
+      freight: order.freight
     };
   }
 }
